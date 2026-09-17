@@ -1,0 +1,698 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  font-family:
+    "Public Sans",
+    Arial,
+    sans-serif;
+
+  color: var(--ink);
+  background: var(--bg);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(13, 38, 164, 0.18);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family:
+    "Bricolage Grotesque",
+    sans-serif;
+
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--sh-sm);
+}
+
+.ui-button {
+  border: 0;
+  border-radius: var(--r-sm);
+  padding: 11px 18px;
+  font-weight: 600;
+}
+
+.ui-button-primary {
+  background: var(--blue);
+  color: white;
+}
+
+.ui-button-secondary {
+  background: var(--blue-50);
+  color: var(--blue);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border-radius: 999px;
+  padding: 6px 10px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge-blue {
+  background: var(--blue-50);
+  color: var(--blue);
+}
+
+.badge-green {
+  background: var(--green-50);
+  color: var(--green-600);
+}
+
+.badge-yellow {
+  background: var(--yellow-50);
+  color: var(--yellow-600);
+}
+
+.badge-red {
+  background: var(--red-50);
+  color: var(--red);
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: var(--card);
+  color: var(--grn);
+
+  font-family:
+    "Bricolage Grotesque",
+    sans-serif;
+
+  font-weight: 800;
+  font-size: 21px;
+}
+
+.brand-mark.small {
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+}
+
+.brand-mark.large {
+  width: 48px;
+  height: 48px;
+  font-size: 26px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: var(--blue-100);
+  color: var(--blue);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.page-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.page-header h1 {
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.05;
+}
+
+.page-header p {
+  margin-top: 9px;
+
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.icon-button {
+  position: relative;
+
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid var(--line);
+  border-radius: 11px;
+
+  background: white;
+  color: var(--slate);
+}
+
+.notification-dot {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  top: 8px;
+  right: 8px;
+
+  border: 2px solid white;
+  border-radius: 50%;
+
+  background: var(--red);
+}
+
+.placeholder-page {
+  min-height: 500px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.placeholder-icon {
+  width: 68px;
+  height: 68px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 20px;
+
+  border-radius: 20px;
+
+  background: var(--blue-50);
+  color: var(--blue);
+}
+
+.placeholder-page h1 {
+  font-size: 32px;
+}
+
+.placeholder-page p {
+  max-width: 480px;
+  margin-top: 10px;
+
+  color: var(--muted);
+}
+
+.placeholder-page small {
+  margin-top: 18px;
+  color: var(--soft);
+}
+
+/* =========================================================
+   HOME TABLET - MAYORDOMO
+   Diseño exclusivo para el rol Mayordomo.
+========================================================= */
+
+.mayordomo-tablet-home {
+  display: none;
+}
+
+/* =========================================================
+   TABLET
+   Aproximadamente entre 768px y 1199px
+========================================================= */
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .home-mayordomo .home-default-content {
+    display: none;
+  }
+
+  .home-mayordomo .mayordomo-tablet-home {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    width: 100%;
+    min-height: 100%;
+
+    padding: 4px 4px 24px;
+  }
+
+  /* Ubicación */
+
+  .mayordomo-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+
+    padding: 9px 13px;
+
+    border: 1px solid var(--line);
+    border-radius: 10px;
+
+    background: var(--card);
+    color: var(--slate);
+
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .mayordomo-location svg {
+    color: var(--blue);
+  }
+
+  /* Saludo */
+
+  .mayordomo-greeting {
+    margin-top: 2px;
+  }
+
+  .mayordomo-greeting .page-eyebrow {
+    margin-bottom: 5px;
+  }
+
+  .mayordomo-greeting h1 {
+    font-size: clamp(28px, 3.5vw, 36px);
+    line-height: 1.05;
+  }
+
+  .mayordomo-greeting p {
+    margin-top: 7px;
+
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* Alerta */
+
+  .mayordomo-alert {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    border: 1px solid var(--red-50);
+    border-radius: var(--r);
+
+    background: var(--card);
+
+    box-shadow: var(--sh-sm);
+  }
+
+  .mayordomo-alert-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: var(--red-50);
+    color: var(--red);
+  }
+
+  .mayordomo-alert > div:nth-child(2) {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .mayordomo-alert > div:nth-child(2) span {
+    color: var(--red);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .mayordomo-alert > div:nth-child(2) strong {
+    color: var(--ink);
+    font-size: 14px;
+  }
+
+  .mayordomo-alert > div:nth-child(2) small {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .mayordomo-alert > button {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    margin-left: auto;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: var(--red-50);
+    color: var(--red);
+  }
+
+  /* Indicadores */
+
+  .mayordomo-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .mayordomo-kpi {
+    min-height: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 14px;
+
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+
+    background: var(--card);
+
+    box-shadow: var(--sh-sm);
+  }
+
+  .mayordomo-kpi-number {
+    color: var(--blue);
+
+    font-family:
+      "Bricolage Grotesque",
+      sans-serif;
+
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .mayordomo-kpi-label {
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Agenda */
+
+  .mayordomo-agenda {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .mayordomo-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .mayordomo-section-heading > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mayordomo-section-heading span {
+    color: var(--blue);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .mayordomo-section-heading h2 {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  .mayordomo-ai-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 11px;
+
+    border: 1px solid var(--blue);
+    border-radius: 9px;
+
+    background: var(--blue-50);
+    color: var(--blue);
+
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .mayordomo-agenda-list {
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+
+    background: var(--card);
+
+    box-shadow: var(--sh-sm);
+  }
+
+  .mayordomo-agenda-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 14px 16px;
+
+    border: 0;
+    border-bottom: 1px solid var(--line);
+
+    background: transparent;
+
+    text-align: left;
+  }
+
+  .mayordomo-agenda-item:last-child {
+    border-bottom: 0;
+  }
+
+  .mayordomo-agenda-item:hover {
+    background: var(--bg);
+  }
+
+  .mayordomo-agenda-icon {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+  }
+
+  .mayordomo-agenda-icon.red {
+    background: var(--red-50);
+    color: var(--red);
+  }
+
+  .mayordomo-agenda-icon.green {
+    background: var(--green-50);
+    color: var(--green-600);
+  }
+
+  .mayordomo-agenda-icon.yellow {
+    background: var(--yellow-50);
+    color: var(--yellow-600);
+  }
+
+  .mayordomo-agenda-info {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mayordomo-agenda-info strong {
+    overflow: hidden;
+
+    color: var(--ink);
+
+    font-size: 13px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mayordomo-agenda-info span {
+    overflow: hidden;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Acciones inferiores */
+
+  .mayordomo-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+
+    margin-top: 2px;
+  }
+
+  .mayordomo-actions button {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: 1px solid var(--line);
+    border-radius: 12px;
+
+    background: var(--card);
+    color: var(--blue);
+
+    box-shadow: var(--sh-sm);
+
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .mayordomo-actions button:hover {
+    border-color: var(--blue);
+    background: var(--blue-50);
+  }
+}
+
+/* =========================================================
+   TABLET MÁS PEQUEÑA
+========================================================= */
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .home-mayordomo .mayordomo-tablet-home {
+    gap: 15px;
+  }
+
+  .mayordomo-alert {
+    padding: 13px 14px;
+  }
+
+  .mayordomo-kpi {
+    min-height: 85px;
+  }
+
+  .mayordomo-kpi-number {
+    font-size: 26px;
+  }
+
+  .mayordomo-agenda-item {
+    padding: 12px 13px;
+  }
+
+  .mayordomo-agenda-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mayordomo-agenda-info strong {
+    font-size: 12px;
+  }
+
+  .mayordomo-agenda-info span {
+    font-size: 10px;
+  }
+
+  .mayordomo-actions button {
+    font-size: 11px;
+  }
+}

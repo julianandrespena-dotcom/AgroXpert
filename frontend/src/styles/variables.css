@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Public+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --blue: #0d26a4;
+  --blue-700: #0a1e82;
+  --blue-900: #06135a;
+
+  --blue-50: #eef1fc;
+  --blue-100: #dde3f8;
+
+  --yellow: #fdc300;
+  --yellow-600: #e0ab00;
+  --yellow-50: #fff8e0;
+
+  --green: #009633;
+  --green-600: #007d2a;
+  --green-50: #e6f4ec;
+  --green-100: #cdeada;
+
+  --ink: #0e1726;
+  --slate: #3a465c;
+  --muted: #6b7588;
+  --soft: #97a0b2;
+
+  --line: #e4e7ee;
+  --line-2: #eef1f6;
+
+  --bg: #eef1f7;
+  --card: #ffffff;
+  --panel: #f7f9fc;
+
+  --red: #e5484d;
+  --red-50: #fdeced;
+
+  --amber: #f5a524;
+  --amber-50: #fef6e7;
+
+  --grn: #16a34a;
+  --grn-50: #e9f7ee;
+
+  --r: 14px;
+  --r-sm: 10px;
+  --r-lg: 20px;
+
+  --sh-sm:
+    0 2px 8px rgba(14, 23, 38, 0.05);
+
+  --sh:
+    0 8px 24px rgba(14, 23, 38, 0.07);
+
+  --sh-lg:
+    0 20px 50px rgba(14, 23, 38, 0.12);
+
+  --ia-gradient:
+    linear-gradient(
+      360deg,
+      #061979 0%,
+      #0f3992 78%
+    );
+}
