@@ -1,16 +1,32 @@
-# React + Vite
+# AgroXpert
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema web para la gestión y consulta de información agrícola de Incauca.
 
-Currently, two official plugins are available:
+## 🚀 Proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+AgroXpert permite centralizar diferentes funcionalidades relacionadas con la gestión agrícola, incluyendo:
 
-## React Compiler
+* 📊 Visualización de dashboards.
+* 🚨 Gestión de alertas.
+* 💬 Chatbot de consultas.
+* 📝 Registro de labores.
+* 👤 Gestión según el rol del usuario.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tecnologías
 
-## Expanding the ESLint configuration
+* React
+* Vite
+* JavaScript
+* Node.js
+* Express
+* CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Estructura
+
+```text
+agroxpert-app/
+├── frontend/
+├── backend/
+├── ia/
+└── etl/
+```
