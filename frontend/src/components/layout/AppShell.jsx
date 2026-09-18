@@ -3,7 +3,6 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import MobileBottomNav from "./MobileBottomNav";
-import TabletMayordomoNav from "./TabletMayordomoNav";
 
 import Home from "../../pages/Home";
 import Alerts from "../../pages/Alerts";
@@ -26,6 +25,7 @@ export default function AppShell() {
 
   const renderPage = () => {
     switch (activePage) {
+
       case "home":
         return (
           <Home
@@ -40,6 +40,7 @@ export default function AppShell() {
         return <Chatbot />;
 
       case "dashboards":
+
         if (!role.permissions.dashboards) {
           return (
             <Placeholder
@@ -52,11 +53,12 @@ export default function AppShell() {
         return <Dashboards />;
 
       case "plans":
+
         if (!role.permissions.plans) {
           return (
             <Placeholder
               title="Acceso restringido"
-              description="No tienes permisos para acceder al registro de labores."
+              description="No tienes permisos para acceder al registro de planes."
             />
           );
         }
@@ -64,6 +66,7 @@ export default function AppShell() {
         return <RegistroPlanes />;
 
       case "admin":
+
         if (!role.permissions.admin) {
           return (
             <Placeholder
@@ -89,17 +92,8 @@ export default function AppShell() {
     }
   };
 
-  const isMayordomo =
-    role.id === "mayordomo";
-
   return (
-    <div
-      className={`app-shell ${
-        isMayordomo
-          ? "app-shell-mayordomo"
-          : ""
-      }`}
-    >
+    <div className="app-shell">
 
       {/* SIDEBAR */}
 
@@ -115,7 +109,6 @@ export default function AppShell() {
 
         <Topbar
           onNavigate={handleNavigate}
-          onLogout={logout}
         />
 
         <main className="app-content">
@@ -130,16 +123,6 @@ export default function AppShell() {
         activePage={activePage}
         onNavigate={handleNavigate}
       />
-
-      {/* NAVEGACIÓN EXCLUSIVA
-          PARA MAYORDOMO EN TABLET */}
-
-      {isMayordomo && (
-        <TabletMayordomoNav
-          activePage={activePage}
-          onNavigate={handleNavigate}
-        />
-      )}
 
     </div>
   );

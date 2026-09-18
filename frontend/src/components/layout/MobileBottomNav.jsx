@@ -25,17 +25,10 @@ export default function MobileBottomNav({
 }) {
   const { role } = useApp();
 
-  const visibleItems = NAV_ITEMS.filter(
-    (item) =>
-      item.roles.includes(role.id)
+  const visibleItems = NAV_ITEMS.filter((item) =>
+    item.roles.includes(role.id)
   );
 
-  /*
-   * Navegación exclusiva para móvil.
-   *
-   * Se mantiene el comportamiento existente:
-   * máximo cuatro accesos.
-   */
   const preferredOrder = [
     "home",
     "alerts",
@@ -56,9 +49,10 @@ export default function MobileBottomNav({
 
   return (
     <nav className="mobile-bottom-nav">
+
       {mobileItems.map((item) => {
-        const Icon =
-          ICONS[item.icon];
+
+        const Icon = ICONS[item.icon];
 
         return (
           <button
@@ -72,14 +66,17 @@ export default function MobileBottomNav({
               onNavigate(item.id)
             }
           >
+
             <Icon size={21} />
 
             <span>
               {item.label}
             </span>
+
           </button>
         );
       })}
+
     </nav>
   );
 }
