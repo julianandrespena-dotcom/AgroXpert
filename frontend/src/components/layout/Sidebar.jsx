@@ -74,7 +74,6 @@ export default function Sidebar({
             activePage === item.id;
 
           return (
-
             <button
               key={item.id}
               className={`sidebar-link ${
@@ -95,7 +94,6 @@ export default function Sidebar({
               </span>
 
             </button>
-
           );
         })}
 

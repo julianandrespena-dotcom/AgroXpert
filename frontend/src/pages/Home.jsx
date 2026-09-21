@@ -62,9 +62,11 @@ export default function Home({
 
             <div>
               <span>ALERTA IMPORTANTE</span>
+
               <strong>
                 Se requiere atención en una actividad
               </strong>
+
               <small>
                 Revisa las novedades de la operación.
               </small>
@@ -83,6 +85,7 @@ export default function Home({
               <span className="mayordomo-kpi-number">
                 8
               </span>
+
               <span className="mayordomo-kpi-label">
                 Labores
               </span>
@@ -92,6 +95,7 @@ export default function Home({
               <span className="mayordomo-kpi-number">
                 5
               </span>
+
               <span className="mayordomo-kpi-label">
                 Suertes
               </span>
@@ -101,6 +105,7 @@ export default function Home({
               <span className="mayordomo-kpi-number">
                 3
               </span>
+
               <span className="mayordomo-kpi-label">
                 Alertas
               </span>
@@ -111,7 +116,10 @@ export default function Home({
             <div className="mayordomo-section-heading">
               <div>
                 <span>AGENDA DEL DÍA</span>
-                <h2>Agenda priorizada de hoy</h2>
+
+                <h2>
+                  Agenda priorizada de hoy
+                </h2>
               </div>
 
               <button
@@ -133,6 +141,7 @@ export default function Home({
                   <strong>
                     Control mecánico de maquinaria
                   </strong>
+
                   <span>
                     Revisar equipos programados para hoy
                   </span>
@@ -152,6 +161,7 @@ export default function Home({
                   <strong>
                     Riego de ventanas
                   </strong>
+
                   <span>
                     Verificar cumplimiento de la programación
                   </span>
@@ -171,6 +181,7 @@ export default function Home({
                   <strong>
                     Mantenimiento de zanjas
                   </strong>
+
                   <span>
                     Actividad pendiente de seguimiento
                   </span>
@@ -182,25 +193,6 @@ export default function Home({
               </button>
             </div>
           </section>
-
-          <div className="mayordomo-actions">
-            <button>
-              <CalendarCheck size={19} />
-              <span>Registrar labor</span>
-            </button>
-
-            <button>
-              <MapPin size={19} />
-              <span>Consultar suerte</span>
-            </button>
-
-            <button
-              onClick={() => onNavigate("chat")}
-            >
-              <Bot size={19} />
-              <span>Preguntar IA</span>
-            </button>
-          </div>
         </div>
       )}
 
@@ -256,7 +248,9 @@ export default function Home({
 
             <div>
               <span>Actividades programadas</span>
+
               <strong>24</strong>
+
               <small>Para hoy</small>
             </div>
           </Card>
@@ -268,7 +262,9 @@ export default function Home({
 
             <div>
               <span>Actividades completadas</span>
+
               <strong>18</strong>
+
               <small>75% del día</small>
             </div>
           </Card>
@@ -280,7 +276,9 @@ export default function Home({
 
             <div>
               <span>Pendientes</span>
+
               <strong>6</strong>
+
               <small>Requieren seguimiento</small>
             </div>
           </Card>
@@ -292,7 +290,9 @@ export default function Home({
 
             <div>
               <span>Alertas</span>
+
               <strong>3</strong>
+
               <small>Sin atender</small>
             </div>
           </Card>
@@ -303,7 +303,10 @@ export default function Home({
             <div className="card-heading">
               <div>
                 <span>ACCESOS RÁPIDOS</span>
-                <h2>¿Qué necesitas consultar?</h2>
+
+                <h2>
+                  ¿Qué necesitas consultar?
+                </h2>
               </div>
             </div>
 
@@ -316,7 +319,10 @@ export default function Home({
                 </div>
 
                 <div>
-                  <strong>Consultar al Chatbot IA</strong>
+                  <strong>
+                    Consultar al Chatbot IA
+                  </strong>
+
                   <span>
                     Obtén información y recomendaciones
                     agrícolas.
@@ -334,7 +340,10 @@ export default function Home({
                 </div>
 
                 <div>
-                  <strong>Revisar alertas</strong>
+                  <strong>
+                    Revisar alertas
+                  </strong>
+
                   <span>
                     Consulta las novedades de la operación.
                   </span>
@@ -345,14 +354,19 @@ export default function Home({
 
               {role.id !== "mayordomo" && (
                 <button
-                  onClick={() => onNavigate("dashboards")}
+                  onClick={() =>
+                    onNavigate("dashboards")
+                  }
                 >
                   <div className="quick-action-icon dashboard">
                     <CalendarCheck size={22} />
                   </div>
 
                   <div>
-                    <strong>Ver dashboards</strong>
+                    <strong>
+                      Ver dashboards
+                    </strong>
+
                     <span>
                       Analiza los principales indicadores.
                     </span>
@@ -368,7 +382,10 @@ export default function Home({
             <div className="card-heading">
               <div>
                 <span>ESTADO OPERATIVO</span>
-                <h2>Resumen de hoy</h2>
+
+                <h2>
+                  Resumen de hoy
+                </h2>
               </div>
             </div>
 
@@ -377,7 +394,10 @@ export default function Home({
                 <span className="status-dot green" />
 
                 <div>
-                  <strong>Operación normal</strong>
+                  <strong>
+                    Operación normal
+                  </strong>
+
                   <small>
                     Sin interrupciones reportadas
                   </small>
@@ -388,7 +408,10 @@ export default function Home({
                 <span className="status-dot yellow" />
 
                 <div>
-                  <strong>6 actividades pendientes</strong>
+                  <strong>
+                    6 actividades pendientes
+                  </strong>
+
                   <small>
                     Requieren seguimiento
                   </small>
@@ -399,9 +422,26 @@ export default function Home({
                 <span className="status-dot red" />
 
                 <div>
-                  <strong>3 alertas activas</strong>
+                  <strong>
+                    3 alertas activas
+                  </strong>
+
                   <small>
                     Consulta las novedades
+                  </small>
+                </div>
+              </div>
+
+              <div>
+                <span className="status-dot green" />
+
+                <div>
+                  <strong>
+                    Operación normal
+                  </strong>
+
+                  <small>
+                    Sin interrupciones
                   </small>
                 </div>
               </div>
