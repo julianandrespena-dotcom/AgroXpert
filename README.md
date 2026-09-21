@@ -6,8 +6,8 @@ Sistema web para la gestión y consulta de información agrícola de Incauca.
 
 AgroXpert permite centralizar diferentes funcionalidades relacionadas con la gestión agrícola, incluyendo:
 
-* 📊 Visualización de dashboards.
-* 📊 Modelos IA.
+* 📊 Visualización de dashboards 1 -2.
+* 📊 Visualización de dashboards 3 - 4.
 * 🚨 Gestión de alertas.
 * 💬 Chatbot de consultas.
 * 📝 Registro de labores.
