@@ -8,6 +8,7 @@ AgroXpert permite centralizar diferentes funcionalidades relacionadas con la ges
 
 * 📊 Visualización de dashboards 1 -2.
 * 📊 Visualización de dashboards 3 - 4.
+* 📊 Visualización de dashboards 5.
 * 🚨 Gestión de alertas.
 * 💬 Chatbot de consultas.
 * 📝 Registro de labores.
