@@ -25,9 +25,13 @@ export default function MobileBottomNav({
 }) {
   const { role } = useApp();
 
-  const visibleItems = NAV_ITEMS.filter((item) =>
-    item.roles.includes(role.id)
-  );
+  const visibleItems = NAV_ITEMS.filter((item) => {
+    if (role?.id === "administrador") {
+      return item.id === "admin";
+    }
+
+    return item.roles.includes(role.id);
+  });
 
   const preferredOrder = [
     "home",
