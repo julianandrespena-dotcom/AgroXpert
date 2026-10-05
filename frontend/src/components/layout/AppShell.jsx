@@ -9,6 +9,7 @@ import Alerts from "../../pages/Alerts";
 import Chatbot from "../../pages/Chatbot";
 import Dashboards from "../../pages/Dashboards";
 import RegistroPlanes from "../../pages/RegistroPlanes";
+import Administracion from "../../pages/Administracion";
 import Placeholder from "../../pages/Placeholder";
 
 import { useApp } from "../../context/AppContext";
@@ -16,8 +17,9 @@ import { useApp } from "../../context/AppContext";
 export default function AppShell() {
   const { role, logout } = useApp();
 
-  const [activePage, setActivePage] =
-    useState("home");
+  const [activePage, setActivePage] = useState(
+    role?.id === "administrador" ? "admin" : "home"
+  );
 
   const handleNavigate = (page) => {
     setActivePage(page);
@@ -25,7 +27,6 @@ export default function AppShell() {
 
   const renderPage = () => {
     switch (activePage) {
-
       case "home":
         return (
           <Home
@@ -40,8 +41,9 @@ export default function AppShell() {
         return <Chatbot />;
 
       case "dashboards":
-
-        if (!role.permissions.dashboards) {
+        if (
+          !role?.permissions?.dashboards
+        ) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -53,8 +55,9 @@ export default function AppShell() {
         return <Dashboards />;
 
       case "plans":
-
-        if (!role.permissions.plans) {
+        if (
+          !role?.permissions?.plans
+        ) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -66,8 +69,9 @@ export default function AppShell() {
         return <RegistroPlanes />;
 
       case "admin":
-
-        if (!role.permissions.admin) {
+        if (
+          !role?.permissions?.admin
+        ) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -76,12 +80,7 @@ export default function AppShell() {
           );
         }
 
-        return (
-          <Placeholder
-            title="Administración"
-            description="Aquí se encontrarán las funciones administrativas de AgroXpert."
-          />
-        );
+        return <Administracion />;
 
       default:
         return (
@@ -95,15 +94,11 @@ export default function AppShell() {
   return (
     <div className="app-shell">
 
-      {/* SIDEBAR */}
-
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}
         onLogout={logout}
       />
-
-      {/* CONTENIDO PRINCIPAL */}
 
       <div className="app-main">
 
@@ -116,8 +111,6 @@ export default function AppShell() {
         </main>
 
       </div>
-
-      {/* NAVEGACIÓN MÓVIL */}
 
       <MobileBottomNav
         activePage={activePage}

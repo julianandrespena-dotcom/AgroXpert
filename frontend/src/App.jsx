@@ -3,7 +3,14 @@ import AppShell from "./components/layout/AppShell";
 import { useApp } from "./context/AppContext";
 
 export default function App() {
-  const { role } = useApp();
+  const {
+    role,
+    loadingSession,
+  } = useApp();
+
+  if (loadingSession) {
+    return null;
+  }
 
   if (!role) {
     return <Login />;

@@ -63,6 +63,9 @@ p {
   border-radius: var(--r-sm);
   padding: 11px 18px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .ui-button-primary {
@@ -269,12 +272,20 @@ p {
 }
 
 /* =========================================================
-   HOME TABLET - MAYORDOMO
-   Diseño exclusivo para el rol Mayordomo.
+   HOME - MAYORDOMO
+   El renderizado se controla desde React.
+   Aquí solamente definimos la apariencia.
 ========================================================= */
 
 .mayordomo-tablet-home {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 100%;
+  min-height: 100%;
+
+  padding: 4px 4px 24px;
 }
 
 /* =========================================================
@@ -283,20 +294,6 @@ p {
 ========================================================= */
 
 @media (min-width: 768px) and (max-width: 1199px) {
-  .home-mayordomo .home-default-content {
-    display: none;
-  }
-
-  .home-mayordomo .mayordomo-tablet-home {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    width: 100%;
-    min-height: 100%;
-
-    padding: 4px 4px 24px;
-  }
 
   /* Ubicación */
 
@@ -468,7 +465,9 @@ p {
     font-weight: 600;
   }
 
-  /* Agenda */
+  /* =======================================================
+     AGENDA
+  ======================================================= */
 
   .mayordomo-agenda {
     display: flex;
@@ -618,7 +617,9 @@ p {
     white-space: nowrap;
   }
 
-  /* Acciones inferiores */
+  /* =======================================================
+     ACCIONES INFERIORES
+  ======================================================= */
 
   .mayordomo-actions {
     display: grid;
@@ -659,6 +660,7 @@ p {
 ========================================================= */
 
 @media (min-width: 768px) and (max-width: 900px) {
+
   .home-mayordomo .mayordomo-tablet-home {
     gap: 15px;
   }
@@ -696,3 +698,4 @@ p {
     font-size: 11px;
   }
 }
+
