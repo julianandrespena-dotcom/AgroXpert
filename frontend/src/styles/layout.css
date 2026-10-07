@@ -255,158 +255,6 @@
   font-size: 10px;
 }
 
-/* MENÚ DESPLEGABLE DEL USUARIO */
-
-.topbar-user-wrapper {
-  position: relative;
-}
-
-.topbar-user {
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    border-color 0.2s;
-}
-
-.topbar-user:hover,
-.topbar-user.open {
-  background: var(--blue-50);
-  border-color: var(--blue-100);
-}
-
-.user-chevron {
-  margin-left: 2px;
-  color: var(--muted);
-  transition: transform 0.2s ease;
-}
-
-.user-chevron.open {
-  transform: rotate(180deg);
-}
-
-.topbar-user-menu {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  width: 245px;
-  padding: 8px;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-  background: white;
-  box-shadow:
-    0 12px 35px rgba(14, 23, 38, 0.12),
-    0 3px 10px rgba(14, 23, 38, 0.05);
-  z-index: 100;
-  animation: userMenuIn 0.15s ease-out;
-}
-
-@keyframes userMenuIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* CABECERA DEL MENÚ */
-
-.user-menu-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px;
-}
-
-.user-menu-header > div:last-child {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-menu-header strong {
-  overflow: hidden;
-  color: var(--ink);
-  font-size: 11px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.user-menu-header span {
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: 9px;
-}
-
-/* AVATAR GRANDE */
-
-.user-avatar.large {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  font-size: 11px;
-}
-
-/* SEPARADOR */
-
-.user-menu-divider {
-  height: 1px;
-  margin: 5px 4px;
-  background: var(--line-2);
-}
-
-/* OPCIONES DEL MENÚ */
-
-.user-menu-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 9px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--ink);
-  text-align: left;
-  font-size: 11px;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-
-.user-menu-item:hover {
-  background: var(--blue-50);
-  color: var(--blue);
-}
-
-.user-menu-item svg {
-  flex-shrink: 0;
-  color: var(--muted);
-}
-
-.user-menu-item:hover svg {
-  color: var(--blue);
-}
-
-/* CERRAR SESIÓN */
-
-.user-menu-item.logout-item {
-  color: var(--red);
-}
-
-.user-menu-item.logout-item svg {
-  color: var(--red);
-}
-
-.user-menu-item.logout-item:hover {
-  background: var(--red-50);
-  color: var(--red);
-}
-
 /* MOBILE BRAND */
 
 .topbar-mobile-brand {
@@ -419,107 +267,7 @@
   padding: 32px;
 }
 
-/* =========================================================
-   HOME
-========================================================= */
-
-/*
-  HOME NORMAL
-
-  Por defecto se muestra el Home normal.
-  El Home especial de Mayordomo solamente se activa
-  en la resolución tablet definida más abajo.
-*/
-
-.home-default-content {
-  display: block;
-}
-
-.mayordomo-tablet-home {
-  display: none;
-}
-
-/* =========================================================
-   HOME MAYORDOMO - TABLET
-========================================================= */
-
-.mayordomo-haciendas {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: white;
-  box-shadow: var(--sh-sm);
-}
-
-.mayordomo-section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.mayordomo-section-heading > div > span {
-  display: block;
-  color: var(--muted);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.mayordomo-section-heading h2 {
-  margin-top: 5px;
-  font-size: 18px;
-}
-
-.mayordomo-access-summary {
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.mayordomo-haciendas-list {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  margin-top: 15px;
-}
-
-.mayordomo-hacienda-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 13px;
-  border: 1px solid var(--line-2);
-  border-radius: 10px;
-  background: var(--panel);
-}
-
-.mayordomo-hacienda-item strong {
-  display: block;
-  font-size: 11px;
-}
-
-.mayordomo-hacienda-item span {
-  display: block;
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: 9px;
-}
-
-.mayordomo-haciendas-empty {
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 9px;
-  background: var(--panel);
-  color: var(--muted);
-  font-size: 10px;
-  text-align: center;
-}
-
-/* =========================================================
-   HOME NORMAL
-========================================================= */
+/* HOME */
 
 .welcome-card {
   position: relative;
@@ -765,17 +513,13 @@
   font-size: 10px;
 }
 
-/* =========================================================
-   MOBILE NAV
-========================================================= */
+/* MOBILE NAV */
 
 .mobile-bottom-nav {
   display: none;
 }
 
-/* =========================================================
-   TABLET
-========================================================= */
+/* TABLET */
 
 @media (max-width: 1100px) {
   .sidebar {
@@ -801,30 +545,7 @@
   }
 }
 
-/* =========================================================
-   MAYORDOMO TABLET
-========================================================= */
-
-/*
-  El Mayordomo utiliza su Home especial únicamente
-  cuando está en una resolución tipo tablet.
-
-  El Home normal se oculta.
-*/
-
-@media (min-width: 769px) and (max-width: 1100px) {
-  .home-mayordomo .home-default-content {
-    display: none;
-  }
-
-  .home-mayordomo .mayordomo-tablet-home {
-    display: block;
-  }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
+/* MOBILE */
 
 @media (max-width: 768px) {
   body {
@@ -980,21 +701,6 @@
     height: 36px;
   }
 
-  /* =======================================================
-     MAYORDOMO EN MÓVIL
-
-     Se mantiene el Home normal.
-     El diseño especial de Mayordomo es únicamente tablet.
-  ======================================================== */
-
-  .home-mayordomo .mayordomo-tablet-home {
-    display: none;
-  }
-
-  .home-mayordomo .home-default-content {
-    display: block;
-  }
-
   /* NAVEGACIÓN INFERIOR */
 
   .mobile-bottom-nav {
@@ -1040,21 +746,6 @@
   .mobile-nav-item.active {
     color: var(--blue);
     background: var(--blue-50);
-  }
-
-  /* HACIENDAS EN MÓVIL */
-
-  .mayordomo-section-heading {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .mayordomo-access-summary {
-    margin-top: 2px;
-  }
-
-  .mayordomo-haciendas {
-    padding: 16px;
   }
 }
 
