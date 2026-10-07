@@ -27,23 +27,9 @@ export default function Sidebar({
 }) {
   const { role } = useApp();
 
-  /*
-   * Solo mostramos las opciones
-   * permitidas para el rol actual.
-   *
-   * El administrador por ahora
-   * solo tendrá acceso a Administración.
-   */
-  const visibleItems =
-    role
-      ? NAV_ITEMS.filter((item) => {
-          if (role.id === "administrador") {
-            return item.id === "admin";
-          }
-
-          return item.roles.includes(role.id);
-        })
-      : [];
+  const visibleItems = NAV_ITEMS.filter((item) =>
+    item.roles.includes(role.id)
+  );
 
   return (
     <aside className="sidebar">
@@ -63,13 +49,12 @@ export default function Sidebar({
           </div>
 
           <div className="brand-company">
-            Gerencia de Campo
+            INCAUCA
           </div>
 
         </div>
 
       </div>
-
 
       {/* TÍTULO DEL MENÚ */}
 
@@ -77,15 +62,13 @@ export default function Sidebar({
         MENÚ PRINCIPAL
       </div>
 
-
       {/* NAVEGACIÓN */}
 
       <nav className="sidebar-nav">
 
         {visibleItems.map((item) => {
 
-          const Icon =
-            ICONS[item.icon];
+          const Icon = ICONS[item.icon];
 
           const active =
             activePage === item.id;
@@ -112,11 +95,9 @@ export default function Sidebar({
 
             </button>
           );
-
         })}
 
       </nav>
-
 
       {/* USUARIO / CERRAR SESIÓN */}
 
@@ -124,31 +105,23 @@ export default function Sidebar({
 
         <div className="sidebar-user">
 
-          {/* AVATAR */}
-
           <div className="user-avatar">
-            {role?.initials}
+            {role.initials}
           </div>
-
-
-          {/* INFORMACIÓN */}
 
           <div className="sidebar-user-info">
 
             <strong>
-              {role?.fullName}
+              {role.fullName}
             </strong>
 
             <span>
-              {role?.name}
+              {role.name}
             </span>
 
           </div>
 
         </div>
-
-
-        {/* CERRAR SESIÓN */}
 
         <button
           className="sidebar-logout"

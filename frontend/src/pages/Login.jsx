@@ -12,9 +12,7 @@ import {
 import { useApp } from "../context/AppContext";
 
 export default function Login() {
-  const {
-    login,
-  } = useApp();
+  const { login } = useApp();
 
   const [username, setUsername] =
     useState("");
@@ -31,33 +29,20 @@ export default function Login() {
   const [error, setError] =
     useState("");
 
-  const [loading, setLoading] =
-    useState(false);
-
-
-  // LOGIN
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     setError("");
-    setLoading(true);
 
-    const normalizedUsername =
-      username.trim().toLowerCase();
-
-    const result = await login(
-      normalizedUsername,
+    const result = login(
+      username.trim().toLowerCase(),
       password
     );
 
     if (!result.success) {
       setError(result.message);
     }
-
-    setLoading(false);
   };
-
 
   return (
     <div className="login-page">
@@ -76,29 +61,10 @@ export default function Login() {
             <div className="login-brand-name">
               AgroXpert
             </div>
+
           </div>
 
         </div>
-
-
-        <div className="login-mobile-logo">
-
-          <div className="brand-mark large">
-            in
-          </div>
-
-          <div>
-            <strong>
-              AgroXpert
-            </strong>
-
-            <span>
-              INCAUCA
-            </span>
-          </div>
-
-        </div>
-
 
         <div className="login-hero-content">
 
@@ -107,26 +73,22 @@ export default function Login() {
           </span>
 
 
-          <h1>
-            Queremos ser{" "}
-            <span className="login-highlight">
-              la energía
-            </span>{" "}
-            que impulsa tu campo.
-          </h1>
-
+        <h1>
+          Queremos ser{" "}
+          <span className="login-highlight">
+            la energía
+          </span>{" "}
+          que impulsa tu campo.
+        </h1>
 
           <p>
-            Sistema experto basado en inteligencia
-            artificial para la gestión agronómica
-            de la caña de azúcar. Un solo lugar
-            para producción, clima, suelo, labores
+            Sistema experto basado en inteligencia artificial 
+            para la gestión agronómica de la caña de azúcar. 
+            Un solo lugar para producción, clima, suelo, labores 
             y recomendaciones IA.
           </p>
 
-
           <div className="login-tags">
-
             <span>
               Recomendaciones IA
             </span>
@@ -138,11 +100,9 @@ export default function Login() {
             <span>
               Modo offline
             </span>
-
           </div>
 
         </div>
-
 
         <div className="login-footer">
           Incauca S.A. · Valle del Cauca
@@ -152,12 +112,29 @@ export default function Login() {
 
       </section>
 
-
       {/* PANEL LOGIN */}
 
       <section className="login-panel">
 
         <div className="login-form-wrapper">
+
+          <div className="login-mobile-logo">
+
+            <div className="brand-mark large">
+              in
+            </div>
+
+            <div>
+              <strong>
+                AgroXpert
+              </strong>
+
+              <span>
+                INCAUCA
+              </span>
+            </div>
+
+          </div>
 
           <div className="login-heading">
 
@@ -175,19 +152,15 @@ export default function Login() {
 
           </div>
 
-
           {error && (
             <div className="login-error">
-
               <AlertCircle size={17} />
 
               <span>
                 {error}
               </span>
-
             </div>
           )}
-
 
           <form
             className="login-form"
@@ -204,10 +177,8 @@ export default function Login() {
                   setUsername(event.target.value)
                 }
                 placeholder="Ingresa tu usuario"
-                disabled={loading}
               />
             </label>
-
 
             <label>
               Contraseña
@@ -225,9 +196,7 @@ export default function Login() {
                     setPassword(event.target.value)
                   }
                   placeholder="Ingresa tu contraseña"
-                  disabled={loading}
                 />
-
 
                 <button
                   type="button"
@@ -236,7 +205,6 @@ export default function Login() {
                       !showPassword
                     )
                   }
-                  disabled={loading}
                 >
                   {showPassword ? (
                     <EyeOff size={18} />
@@ -248,7 +216,6 @@ export default function Login() {
               </div>
 
             </label>
-
 
             <div className="login-options">
 
@@ -264,7 +231,6 @@ export default function Login() {
                   onClick={() =>
                     setRemember(!remember)
                   }
-                  disabled={loading}
                 >
                   {remember && (
                     <Check size={13} />
@@ -277,34 +243,26 @@ export default function Login() {
 
               </label>
 
-
               <button
                 type="button"
                 className="forgot-button"
-                disabled={loading}
               >
                 ¿Olvidaste tu acceso?
               </button>
 
             </div>
 
-
             <button
               type="submit"
               className="login-submit"
-              disabled={loading}
             >
-              {loading
-                ? "Ingresando..."
-                : "Ingresar"}
+              Ingresar
             </button>
 
           </form>
 
-
           <div className="login-divider">
           </div>
-
 
           <div className="login-alternatives">
 
@@ -317,6 +275,84 @@ export default function Login() {
               <KeyRound size={19} />
               SSO corporativo
             </button>
+
+          </div>
+
+          {/* USUARIOS DE PRUEBA */}
+
+          <div className="test-users">
+
+            <div className="test-users-title">
+              Usuarios de prueba
+            </div>
+
+            <div className="test-users-list">
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUsername("gerente");
+                  setPassword("1234");
+                }}
+              >
+                <strong>
+                  Gerente
+                </strong>
+
+                <span>
+                  Carlos Córdoba
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUsername("director");
+                  setPassword("1234");
+                }}
+              >
+                <strong>
+                  Director
+                </strong>
+
+                <span>
+                  Jaime Marín
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUsername("supervisor");
+                  setPassword("1234");
+                }}
+              >
+                <strong>
+                  Supervisor
+                </strong>
+
+                <span>
+                  Héctor Zambrano
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUsername("mayordomo");
+                  setPassword("1234");
+                }}
+              >
+                <strong>
+                  Mayordomo
+                </strong>
+
+                <span>
+                  Carlos Maya
+                </span>
+              </button>
+
+            </div>
 
           </div>
 
