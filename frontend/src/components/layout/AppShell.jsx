@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import Sidebar from "./Sidebar";
@@ -28,11 +29,7 @@ export default function AppShell() {
   const renderPage = () => {
     switch (activePage) {
       case "home":
-        return (
-          <Home
-            onNavigate={handleNavigate}
-          />
-        );
+        return <Home onNavigate={handleNavigate} />;
 
       case "alerts":
         return <Alerts />;
@@ -41,9 +38,7 @@ export default function AppShell() {
         return <Chatbot />;
 
       case "dashboards":
-        if (
-          !role?.permissions?.dashboards
-        ) {
+        if (!role?.permissions?.dashboards) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -55,9 +50,7 @@ export default function AppShell() {
         return <Dashboards />;
 
       case "plans":
-        if (
-          !role?.permissions?.plans
-        ) {
+        if (!role?.permissions?.plans) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -69,9 +62,7 @@ export default function AppShell() {
         return <RegistroPlanes />;
 
       case "admin":
-        if (
-          !role?.permissions?.admin
-        ) {
+        if (!role?.permissions?.admin) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -83,17 +74,12 @@ export default function AppShell() {
         return <Administracion />;
 
       default:
-        return (
-          <Home
-            onNavigate={handleNavigate}
-          />
-        );
+        return <Home onNavigate={handleNavigate} />;
     }
   };
 
   return (
     <div className="app-shell">
-
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}
@@ -101,22 +87,15 @@ export default function AppShell() {
       />
 
       <div className="app-main">
+        <Topbar onNavigate={handleNavigate} />
 
-        <Topbar
-          onNavigate={handleNavigate}
-        />
-
-        <main className="app-content">
-          {renderPage()}
-        </main>
-
+        <main className="app-content">{renderPage()}</main>
       </div>
 
       <MobileBottomNav
         activePage={activePage}
         onNavigate={handleNavigate}
       />
-
     </div>
   );
 }
