@@ -21,14 +21,9 @@ export function authMiddleware(req, res, next) {
     }
 
     req.user = user;
-
-    next();
-
+    return next();
   } catch (error) {
-    console.error(
-      "Error verificando sesión:",
-      error
-    );
+    console.error("Error verificando sesión:", error);
 
     return res.status(500).json({
       success: false,
