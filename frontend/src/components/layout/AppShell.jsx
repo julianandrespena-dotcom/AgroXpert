@@ -8,7 +8,7 @@ import MobileBottomNav from "./MobileBottomNav";
 import Home from "../../pages/Home";
 import Alerts from "../../pages/Alerts";
 import Chatbot from "../../pages/Chatbot";
-import Dashboards from "../../pages/Dashboards";
+import Dashboard1 from "../../pages/dashboard_1"
 import RegistroPlanes from "../../pages/RegistroPlanes";
 import Administracion from "../../pages/Administracion";
 import Placeholder from "../../pages/Placeholder";
@@ -47,7 +47,7 @@ export default function AppShell() {
           );
         }
 
-        return <Dashboards />;
+        return <Dashboard1 />;
 
       case "plans":
         if (!role?.permissions?.plans) {
