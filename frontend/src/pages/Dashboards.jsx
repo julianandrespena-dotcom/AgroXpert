@@ -740,6 +740,8 @@ export default function Dashboards() {
 
   const [nivelComparacion, setNivelComparacion] = useState("Zona");
   const [zonaComparacion, setZonaComparacion] = useState("");
+  const [haciendaComparacion, setHaciendaComparacion] = useState("");
+  const [suerteComparacion, setSuerteComparacion] = useState("");
   const [aniosComparacion, setAniosComparacion] = useState([]);
   const [indicadorComparacion, setIndicadorComparacion] = useState("");
 
@@ -920,43 +922,76 @@ export default function Dashboards() {
 
   const zonasComparacion = zonas;
 
+  const haciendasComparacion = useMemo(() => {
+    if (!campos.zona || !campos.hacienda || !zonaComparacion) {
+      return [];
+    }
+
+    return uniqueValues(
+      registros.filter(
+        (row) => String(row[campos.zona] ?? "") === zonaComparacion
+      ),
+      (row) => row[campos.hacienda]
+    );
+  }, [registros, campos.zona, campos.hacienda, zonaComparacion]);
+
+  const suertesComparacion = useMemo(() => {
+    if (!campos.zona || !campos.hacienda || !campos.suerte || !zonaComparacion) {
+      return [];
+    }
+
+    return uniqueValues(
+      registros.filter(
+        (row) =>
+          String(row[campos.zona] ?? "") === zonaComparacion &&
+          (!haciendaComparacion ||
+            String(row[campos.hacienda] ?? "") === haciendaComparacion)
+      ),
+      (row) => row[campos.suerte]
+    );
+  }, [
+    registros,
+    campos.zona,
+    campos.hacienda,
+    campos.suerte,
+    zonaComparacion,
+    haciendaComparacion,
+  ]);
+
 const registrosBaseComparacion = useMemo(() => {
-  const query = normalizeKey(busqueda);
-
   return registros.filter((row) => {
-    // La comparación utiliza su propia zona y sus propios años.
-    // Los filtros globales de hacienda, suerte y búsqueda se mantienen.
-    if (hacienda && String(row[campos.hacienda] ?? "") !== hacienda) {
+    if (
+      !zonaComparacion ||
+      String(row[campos.zona] ?? "") !== zonaComparacion
+    ) {
       return false;
     }
 
-    if (suerte && String(row[campos.suerte] ?? "") !== suerte) {
+    if (
+      haciendaComparacion &&
+      String(row[campos.hacienda] ?? "") !== haciendaComparacion
+    ) {
       return false;
     }
 
-    if (query) {
-      const found = Object.values(row).some((value) =>
-        normalizeKey(value).includes(query)
-      );
-
-      if (!found) return false;
+    if (
+      suerteComparacion &&
+      String(row[campos.suerte] ?? "") !== suerteComparacion
+    ) {
+      return false;
     }
 
     return true;
   });
-}, [registros, hacienda, suerte, busqueda, campos]);
+}, [registros, zonaComparacion, haciendaComparacion, suerteComparacion, campos]);
 
 const aniosComparacionDisponibles = useMemo(
   () =>
     uniqueValues(
-      registrosBaseComparacion.filter(
-        (row) =>
-          !zonaComparacion ||
-          String(row[campos.zona] ?? "") === zonaComparacion
-      ),
+      registrosBaseComparacion,
       (row) => (campos.anio ? row[campos.anio] : "")
     ),
-  [registrosBaseComparacion, zonaComparacion, campos]
+  [registrosBaseComparacion, campos.anio]
 );
 
 useEffect(() => {
@@ -966,10 +1001,41 @@ useEffect(() => {
 }, [aniosComparacionDisponibles]);
 
 useEffect(() => {
-  if (!zonaComparacion && zonasComparacion.length) {
-    setZonaComparacion(zona || zonasComparacion[0]);
+  if (zonaComparacion && !zonasComparacion.includes(zonaComparacion)) {
+    setZonaComparacion("");
+    setHaciendaComparacion("");
+    setAniosComparacion([]);
+    return;
   }
+
+  if (!zonaComparacion && zonasComparacion.length > 0) {
+  const zonaInicial = zonasComparacion.includes(zona)
+    ? zona
+    : zonasComparacion[0];
+
+  setZonaComparacion(zonaInicial);
+}
 }, [zona, zonaComparacion, zonasComparacion]);
+
+useEffect(() => {
+  if (
+    haciendaComparacion &&
+    !haciendasComparacion.includes(haciendaComparacion)
+  ) {
+    setHaciendaComparacion("");
+    setAniosComparacion([]);
+  }
+}, [haciendaComparacion, haciendasComparacion]);
+
+useEffect(() => {
+  if (
+    suerteComparacion &&
+    !suertesComparacion.includes(suerteComparacion)
+  ) {
+    setSuerteComparacion("");
+    setAniosComparacion([]);
+  }
+}, [suerteComparacion, suertesComparacion]);
 
 useEffect(() => {
   if (
@@ -1497,7 +1563,7 @@ const datosComparacionAnual = useMemo(() => {
             <SectionHeading
               eyebrow="COMPARACIÓN HISTÓRICA"
               title="Comparación de indicadores por año"
-              description="Selecciona una zona, un indicador y varios años para comparar sus promedios. Los filtros globales de hacienda, suerte y búsqueda se conservan."
+              description="Selecciona una zona, una hacienda y una suerte opcional, junto con un indicador y varios años, para comparar sus promedios históricos. Los filtros de esta sección son independientes del contexto global."
             />
 
             <article className="agx-panel">
@@ -1508,11 +1574,52 @@ const datosComparacionAnual = useMemo(() => {
                     value={zonaComparacion}
                     onChange={(event) => {
                       setZonaComparacion(event.target.value);
+                      setHaciendaComparacion("");
+                      setSuerteComparacion("");
                       setAniosComparacion([]);
                     }}
                   >
                     <option value="">Seleccionar zona</option>
                     {zonasComparacion.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  <span>Hacienda (opcional)</span>
+                  <select
+                    value={haciendaComparacion}
+                    onChange={(event) => {
+                      setHaciendaComparacion(event.target.value);
+                      setSuerteComparacion("");
+                      setAniosComparacion([]);
+                    }}
+                    disabled={!zonaComparacion || !haciendasComparacion.length}
+                  >
+                    <option value="">Todas las haciendas de la zona</option>
+                    {haciendasComparacion.map((item) => (
+                      <option key={item} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  <span>Suerte (opcional)</span>
+                  <select
+                    value={suerteComparacion}
+                    onChange={(event) => {
+                      setSuerteComparacion(event.target.value);
+                      setAniosComparacion([]);
+                    }}
+                    disabled={!zonaComparacion || !suertesComparacion.length}
+                  >
+                    <option value="">Todas las suertes disponibles</option>
+                    {suertesComparacion.map((item) => (
                       <option key={item} value={item}>
                         {item}
                       </option>
@@ -1601,6 +1708,12 @@ const datosComparacionAnual = useMemo(() => {
                       Zona: <strong>{zonaComparacion}</strong>
                     </span>
                     <span>
+                      Hacienda:{" "} <strong>{haciendaComparacion || "Todas las haciendas de la zona"}</strong>
+                    </span>
+                    <span>
+                      Suerte:{" "} <strong>{suerteComparacion || "Todas las suertes disponibles"}</strong>
+                    </span>
+                    <span>
                       Años comparados:{" "}
                       <strong>{datosComparacionAnual.length}</strong>
                     </span>
@@ -1650,9 +1763,10 @@ const datosComparacionAnual = useMemo(() => {
                   </div>
 
                   <p className="agx-chart-footnote">
-                    Cada barra representa el promedio del indicador en ese año para
-                    la zona seleccionada. “Obs.” indica cuántos valores numéricos
-                    se utilizaron en el cálculo.
+                    Cada barra representa el promedio del indicador para la zona, hacienda y
+                    suerte seleccionadas en ese año. Si no seleccionas una hacienda o una suerte,
+                    se incluyen todos los registros disponibles dentro del ámbito seleccionado.
+                    “Obs.” indica cuántos valores numéricos se utilizaron en el cálculo.
                   </p>
                 </>
               ) : (
