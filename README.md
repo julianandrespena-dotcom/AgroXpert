@@ -26,7 +26,7 @@ El sistema está construido con una arquitectura frontend/backend y utiliza Micr
 - **👤 Gestión de usuarios:** permite administrar y consultar usuarios, roles y asignaciones.
 - **🗺️ Control de acceso territorial:** relaciona usuarios con zonas, haciendas y suertes.
 - **📋 Registro de labores:** módulo destinado al registro de actividades agrícolas.
-- **🤖 Chatbot:** interfaz de asistencia integrada con OpenAI, según la configuración del backend.
+- **🤖 Chatbot:** interfaz de asistencia mediante inteligencia artificial, prevista para integrarse con Microsoft Fabric Data Agents según la implementación del backend.
 - **🧭 Navegación por módulos:** presenta las funcionalidades disponibles según los permisos del usuario.
 
 ### Roles de usuario
@@ -62,14 +62,14 @@ La aplicación se divide en los siguientes componentes:
 | 🔑 Identidad y autenticación del backend | `@azure/identity`, `@azure/identity-vscode` |
 | 🔒 Contraseñas | `bcrypt`, `bcryptjs` |
 | 🌐 Comunicación y configuración | `cors`, `cookie-parser`, `dotenv` |
-| 🤖 Inteligencia artificial | `openai` |
+| 🤖 Inteligencia artificial | Microsoft Fabric Data Agents |
 | 📊 Procesamiento de Excel | `xlsx` |
 
 ### Servicios integrados
 
 - **Microsoft Fabric:** base de datos para la gestión de usuarios, roles y asignaciones.
 - **Microsoft Entra ID:** autenticación corporativa mediante los flujos configurados.
-- **OpenAI:** servicio utilizado por las funcionalidades que requieren inteligencia artificial.
+- **Microsoft Fabric Data Agents:** integración prevista para habilitar consultas y asistencia mediante inteligencia artificial sobre los datos autorizados.
 
 ## 📋 4. Requisitos previos
 
@@ -81,7 +81,7 @@ Antes de ejecutar AgroXpert localmente, debes disponer de:
 - **Acceso al repositorio:** permisos para clonar el proyecto.
 - **Microsoft Fabric:** acceso autorizado al workspace y a la base de datos `AgroXpert_Usuarios`.
 - **Identidad de Microsoft:** una sesión autenticada y autorizada cuando el backend utilice el proveedor de identidad de VS Code.
-- **Clave de OpenAI:** si la funcionalidad del chatbot requiere este servicio en el entorno local.
+
 
 Comprueba las versiones instaladas desde PowerShell:
 
@@ -187,7 +187,7 @@ El backend utiliza `dotenv` para cargar variables de entorno.
 
 El puerto local previsto es `3000`. Verifica que `backend/src/server.js` utilice `process.env.PORT`, porque el puerto puede estar definido directamente en el código.
 
-Si el chatbot necesita OpenAI, configura la clave de API utilizando el nombre de variable que lea la implementación actual. No agregues variables ficticias que el código no utilice.
+Si se integra Microsoft Fabric Data Agents, configura las variables de entorno y los permisos que requiera la implementación. Utiliza únicamente los parámetros definidos en el código.
 
 ### ☁️ 7.3. Conexión con Microsoft Fabric
 
