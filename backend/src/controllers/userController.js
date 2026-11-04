@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import sql from "mssql";
 import { getFabricPool } from "../database/fabric.js";
+import { registrarEvento } from "../services/bitacoraService.js";
 
 /* =========================================================
    CONFIGURACIÓN
@@ -56,6 +57,41 @@ function responderError(res, error, mensaje) {
   return res.status(500).json({
     mensaje,
   });
+}
+
+function obtenerActorAuditoria(req) {
+  return {
+    actorUsuarioId: req.user?.id
+      ? String(req.user.id)
+      : null,
+    actorUsuario:
+      req.user?.usuario ??
+      req.user?.username ??
+      req.user?.correo ??
+      null,
+  };
+}
+
+async function obtenerDatosAuditoriaUsuario(
+  usuarioId,
+  transaction = null
+) {
+  const usuario = await obtenerUsuarioPorId(
+    usuarioId,
+    transaction
+  );
+
+  if (!usuario) return null;
+
+  const accesos = await obtenerAccesosUsuario(
+    usuarioId,
+    transaction
+  );
+
+  return {
+    usuario,
+    accesos,
+  };
 }
 
 async function obtenerPool() {
@@ -746,6 +782,26 @@ export async function createUser(req, res) {
     const usuarioId = usuarioInsertado.recordset[0].id;
 
     await asignarAccesos(usuarioId, accesos, transaction);
+
+    const datosNuevos = await obtenerDatosAuditoriaUsuario(
+      usuarioId,
+      transaction
+    );
+
+    await registrarEvento({
+      ...obtenerActorAuditoria(req),
+      usuarioAfectadoId: String(usuarioId),
+      usuarioAfectado: datosNuevos?.usuario?.usuario ??
+        datosNuevos?.usuario?.nombre,
+      categoria: "ADMINISTRACION",
+      evento: "USER_CREATED",
+      modulo: "USUARIOS",
+      descripcion: "Usuario creado correctamente.",
+      resultado: "EXITOSO",
+      datosNuevos,
+      transaction,
+    });
+
     await transaction.commit();
 
     const nuevoUsuario = await obtenerUsuarioPorId(usuarioId);
@@ -861,6 +917,11 @@ export async function updateUser(req, res) {
 
     await transaction.begin();
 
+    const datosAnteriores = await obtenerDatosAuditoriaUsuario(
+      id,
+      transaction
+    );
+
     const duplicadoRequest = new sql.Request(transaction);
     duplicadoRequest.input(
       "username",
@@ -923,6 +984,41 @@ export async function updateUser(req, res) {
     `);
 
     await reemplazarAccesos(id, accesos, transaction);
+
+    const datosNuevos = await obtenerDatosAuditoriaUsuario(
+      id,
+      transaction
+    );
+
+    const huboCambioPermisos =
+      datosAnteriores?.usuario?.rol_id !==
+        datosNuevos?.usuario?.rol_id ||
+      JSON.stringify(datosAnteriores?.accesos) !==
+        JSON.stringify(datosNuevos?.accesos) ||
+      datosAnteriores?.usuario?.acceso_global !==
+        datosNuevos?.usuario?.acceso_global;
+
+    await registrarEvento({
+      ...obtenerActorAuditoria(req),
+      usuarioAfectadoId: String(id),
+      usuarioAfectado: datosNuevos?.usuario?.usuario ??
+        datosNuevos?.usuario?.nombre,
+      categoria: huboCambioPermisos
+        ? "AUTORIZACION"
+        : "ADMINISTRACION",
+      evento: huboCambioPermisos
+        ? "ROLE_PERMISSION_CHANGED"
+        : "USER_UPDATED",
+      modulo: "USUARIOS",
+      descripcion: huboCambioPermisos
+        ? "Se actualizaron el rol o los permisos del usuario."
+        : "Se actualizaron los datos del usuario.",
+      resultado: "EXITOSO",
+      datosAnteriores,
+      datosNuevos,
+      transaction,
+    });
+
     await transaction.commit();
 
     const actualizado = await obtenerUsuarioPorId(id);
@@ -949,6 +1045,7 @@ export async function updateUser(req, res) {
 /* =========================================================
    CAMBIAR ESTADO
 ========================================================= */
+
 
 export async function updateUserStatus(req, res) {
   try {
@@ -978,6 +1075,7 @@ export async function updateUserStatus(req, res) {
       });
     }
 
+    const datosAnteriores = await obtenerDatosAuditoriaUsuario(id);
     const pool = await obtenerPool();
     const request = pool.request();
 
@@ -991,6 +1089,27 @@ export async function updateUserStatus(req, res) {
         fecha_actualizacion = SYSUTCDATETIME()
       WHERE id = @id
     `);
+
+    const datosNuevos = await obtenerDatosAuditoriaUsuario(id);
+
+    try {
+      await registrarEvento({
+        ...obtenerActorAuditoria(req),
+        usuarioAfectadoId: String(id),
+        usuarioAfectado: usuario.usuario ?? usuario.nombre,
+        categoria: "ADMINISTRACION",
+        evento: "USER_STATUS_CHANGED",
+        modulo: "USUARIOS",
+        descripcion: Boolean(Number(activo))
+          ? "Usuario activado."
+          : "Usuario desactivado.",
+        resultado: "EXITOSO",
+        datosAnteriores,
+        datosNuevos,
+      });
+    } catch (error) {
+      console.error("Error registrando cambio de estado:", error);
+    }
 
     return res.json({
       mensaje: "Estado actualizado correctamente.",
@@ -1007,6 +1126,7 @@ export async function updateUserStatus(req, res) {
 /* =========================================================
    CAMBIAR CONTRASEÑA
 ========================================================= */
+
 
 export async function updateUserPassword(req, res) {
   try {
@@ -1059,6 +1179,26 @@ export async function updateUserPassword(req, res) {
       WHERE id = @id
     `);
 
+    try {
+      await registrarEvento({
+        ...obtenerActorAuditoria(req),
+        usuarioAfectadoId: String(id),
+        usuarioAfectado: usuario.usuario ?? usuario.nombre,
+        categoria: "ADMINISTRACION",
+        evento: "PASSWORD_CHANGED",
+        modulo: "USUARIOS",
+        descripcion: "Contraseña del usuario actualizada.",
+        resultado: "EXITOSO",
+        datosNuevos: {
+          usuarioId: id,
+          passwordActualizada: true,
+          debeCambiarPassword: true,
+        },
+      });
+    } catch (error) {
+      console.error("Error registrando cambio de contraseña:", error);
+    }
+
     return res.json({
       mensaje: "Contraseña actualizada correctamente.",
     });
@@ -1070,6 +1210,7 @@ export async function updateUserPassword(req, res) {
     );
   }
 }
+
 
 /* =========================================================
    ELIMINAR USUARIO
@@ -1102,6 +1243,11 @@ export async function deleteUser(req, res) {
 
     await transaction.begin();
 
+    const datosAnteriores = await obtenerDatosAuditoriaUsuario(
+      id,
+      transaction
+    );
+
     for (const tabla of [
       "Usuario_Zona",
       "Usuario_Hacienda",
@@ -1123,6 +1269,25 @@ export async function deleteUser(req, res) {
       DELETE FROM dbo.Usuarios
       WHERE id = @id
     `);
+
+    await registrarEvento({
+      ...obtenerActorAuditoria(req),
+      usuarioAfectadoId: String(id),
+      usuarioAfectado: usuario.usuario ?? usuario.nombre,
+      categoria: "ADMINISTRACION",
+      evento: "USER_DELETED",
+      modulo: "USUARIOS",
+      descripcion: "Usuario eliminado correctamente.",
+      resultado: "EXITOSO",
+      datosAnteriores,
+      datosNuevos: {
+        id: usuario.id,
+        usuario: usuario.usuario,
+        nombre: usuario.nombre,
+        eliminado: true,
+      },
+      transaction,
+    });
 
     await transaction.commit();
 

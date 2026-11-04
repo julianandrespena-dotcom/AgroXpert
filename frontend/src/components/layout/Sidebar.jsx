@@ -4,6 +4,7 @@ import {
   Sparkles,
   BarChart3,
   ClipboardList,
+  Users,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -17,6 +18,7 @@ const ICONS = {
   Sparkles,
   BarChart3,
   ClipboardList,
+  Users,
   Settings,
 };
 
@@ -26,6 +28,11 @@ export default function Sidebar({
   onLogout,
 }) {
   const { role } = useApp();
+
+
+  const visibleItems = role
+    ? NAV_ITEMS.filter((item) => item.roles.includes(role.id))
+    : [];
 
   /*
    * Solo mostramos las opciones
@@ -45,16 +52,23 @@ export default function Sidebar({
         })
       : [];
 
+  const sections = visibleItems.reduce((groups, item) => {
+    const section = item.section || null;
+
+    if (!groups[section]) {
+      groups[section] = [];
+    }
+
+    groups[section].push(item);
+
+    return groups;
+  }, {});
+
+
   return (
     <aside className="sidebar">
-
-      {/* MARCA */}
-
       <div className="sidebar-brand">
-
-        <div className="brand-mark">
-          in
-        </div>
+        <div className="brand-mark">in</div>
 
         <div>
 
@@ -66,10 +80,12 @@ export default function Sidebar({
             Gerencia de Campo
           </div>
 
+
+        <div>
+          <div className="brand-name">AgroXpert</div>
+          <div className="brand-company">INCAUCA</div>
         </div>
-
       </div>
-
 
       {/* TÍTULO DEL MENÚ */}
 
@@ -77,6 +93,55 @@ export default function Sidebar({
         MENÚ PRINCIPAL
       </div>
 
+
+      <nav className="sidebar-nav">
+        {Object.entries(sections).map(([section, items]) => (
+          <div key={section || "general"}>
+            {section && (
+              <div className="sidebar-section-title">
+                {section.toUpperCase()}
+              </div>
+            )}
+
+            {items.map((item) => {
+              const Icon = ICONS[item.icon];
+              const active = activePage === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`sidebar-link ${
+                    active ? "active" : ""
+                  }`}
+                  onClick={() => onNavigate(item.id)}
+                >
+                  {Icon && (
+                    <Icon
+                      size={19}
+                      strokeWidth={2}
+                    />
+                  )}
+
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+
+      <div className="sidebar-bottom">
+        {role && (
+          <div className="sidebar-user">
+            <div className="user-avatar">
+              {role.initials}
+            </div>
+
+            <div className="sidebar-user-info">
+              <strong>{role.fullName}</strong>
+              <span>{role.name}</span>
+            </div>
 
       {/* NAVEGACIÓN */}
 
@@ -144,27 +209,20 @@ export default function Sidebar({
             </span>
 
           </div>
-
-        </div>
+        )}
 
 
         {/* CERRAR SESIÓN */}
 
         <button
+          type="button"
           className="sidebar-logout"
           onClick={onLogout}
         >
-
           <LogOut size={17} />
-
-          <span>
-            Cerrar sesión
-          </span>
-
+          <span>Cerrar sesión</span>
         </button>
-
       </div>
-
     </aside>
   );
 }
