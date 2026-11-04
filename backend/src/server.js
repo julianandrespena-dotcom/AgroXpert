@@ -1,3 +1,4 @@
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -43,12 +44,6 @@ app.use("/api/users", usersRoutes);
 app.use("/api/access", accessRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/bitacora", bitacoraRoutes);
-
-const PORT = 3000;
-
-app.listen(PORT, () => {
-  console.log(`Backend ejecutándose en http://localhost:${PORT}`);
-});
 
 export default app;
 

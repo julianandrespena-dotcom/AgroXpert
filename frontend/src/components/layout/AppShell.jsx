@@ -8,7 +8,7 @@ import MobileBottomNav from "./MobileBottomNav";
 import Home from "../../pages/Home";
 import Alerts from "../../pages/Alerts";
 import Chatbot from "../../pages/Chatbot";
-import Dashboard1 from "../../pages/dashboard_1"
+import Dashboard1 from "../../pages/dashboard_1";
 import RegistroPlanes from "../../pages/RegistroPlanes";
 import Administracion from "../../pages/Administracion";
 import Bitacora from "../../pages/administracion/Bitacora";
@@ -20,12 +20,9 @@ import { useApp } from "../../context/AppContext";
 export default function AppShell() {
   const { role, logout } = useApp();
 
-
-  const [activePage, setActivePage] = useState("home");
   const [activePage, setActivePage] = useState(
     role?.id === "administrador" ? "admin" : "home"
   );
-
 
   const handleNavigate = (page) => {
     setActivePage(page);
@@ -68,7 +65,6 @@ export default function AppShell() {
 
       case "admin":
         if (!role?.permissions?.admin) {
-
           return (
             <Placeholder
               title="Acceso restringido"
@@ -81,8 +77,6 @@ export default function AppShell() {
 
       case "bitacora":
         if (!role?.permissions?.admin) {
-
-
           return (
             <Placeholder
               title="Acceso restringido"
@@ -91,14 +85,11 @@ export default function AppShell() {
           );
         }
 
-
         return (
           <Bitacora
             onBack={() => handleNavigate("admin")}
           />
         );
-
-        return <Administracion />;
 
       default:
         return <Home onNavigate={handleNavigate} />;
@@ -119,8 +110,6 @@ export default function AppShell() {
         <main className="app-content">
           {renderPage()}
         </main>
-        <main className="app-content">{renderPage()}</main>
-
       </div>
 
       <MobileBottomNav
