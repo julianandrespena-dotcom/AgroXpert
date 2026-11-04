@@ -1036,3 +1036,544 @@
     font-size: 9px;
   }
 }
+
+
+
+/* =========================================================
+   BITÁCORA - DISEÑO MEJORADO
+========================================================= */
+
+/* Resumen */
+.bitacora-summary {
+  min-height: 82px;
+  padding: 18px 22px;
+}
+
+.bitacora-summary-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bitacora-summary-info span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.bitacora-summary-info strong {
+  color: var(--ink);
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+/* Filtros */
+.bitacora-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.6fr) repeat(2, minmax(145px, 1fr)) repeat(2, minmax(145px, 1fr)) auto;
+  align-items: end;
+  gap: 14px;
+  padding: 18px;
+  background: var(--surface, #fff);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.bitacora-filter-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.bitacora-filter-search:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(13, 38, 164, 0.08);
+}
+
+.bitacora-filter-search input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 0;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.bitacora-filter-search input::placeholder {
+  color: #9299a8;
+}
+
+.bitacora-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.bitacora-filter-field > span {
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bitacora-filter-field select,
+.bitacora-filter-field input[type="date"] {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0 11px;
+  color: var(--ink);
+  background-color: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.bitacora-filter-field select {
+  cursor: pointer;
+}
+
+.bitacora-filter-field select:focus,
+.bitacora-filter-field input[type="date"]:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(13, 38, 164, 0.08);
+}
+
+.bitacora-clear-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 13px;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.bitacora-clear-button:hover:not(:disabled) {
+  color: var(--blue);
+  background: rgba(13, 38, 164, 0.05);
+}
+
+.bitacora-clear-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Tabla */
+.bitacora-table {
+  min-width: 1050px;
+}
+
+.bitacora-table th {
+  white-space: nowrap;
+}
+
+.bitacora-table td {
+  vertical-align: middle;
+}
+
+/* Modal: centrado respecto a toda la ventana */
+.bitacora-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+
+.bitacora-detail-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(760px, 100%);
+  max-height: min(850px, calc(100dvh - 48px));
+  margin: auto;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+}
+
+/* Encabezado del modal */
+.bitacora-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 23px 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.bitacora-modal-header > div {
+  min-width: 0;
+}
+
+.bitacora-modal-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.bitacora-modal-header h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.bitacora-modal-header p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+/* Contenido desplazable */
+.bitacora-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  padding: 23px 26px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Estado */
+.bitacora-detail-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px 15px;
+  background: #f7f8fa;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.bitacora-detail-status > span:first-child {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Secciones */
+.bitacora-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  min-width: 0;
+}
+
+.bitacora-detail-section h3 {
+  margin: 0;
+  padding-bottom: 10px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Información general */
+.bitacora-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px 24px;
+}
+
+.bitacora-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.bitacora-detail-item span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.bitacora-detail-item strong {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Descripción */
+.bitacora-detail-description {
+  margin: 0;
+  padding: 13px 15px;
+  color: var(--ink);
+  background: #f7f8fa;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* Datos anteriores y nuevos */
+.bitacora-json-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.bitacora-json-card {
+  min-width: 0;
+  overflow: hidden;
+  background: #f7f8fa;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.bitacora-json-card h4 {
+  margin: 0;
+  padding: 11px 13px;
+  color: var(--ink);
+  background: #eef0f4;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.bitacora-json-card pre {
+  max-height: 220px;
+  margin: 0;
+  padding: 13px;
+  color: #374151;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* Pie del modal */
+.bitacora-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 26px;
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+
+/* Paginación */
+.bitacora-pagination {
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .bitacora-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bitacora-filter-search {
+    grid-column: 1 / -1;
+  }
+
+  .bitacora-clear-button {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .bitacora-filters {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    padding: 15px;
+  }
+
+  .bitacora-filter-search {
+    grid-column: auto;
+  }
+
+  .bitacora-clear-button {
+    width: 100%;
+  }
+
+  .bitacora-detail-grid,
+  .bitacora-json-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bitacora-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .bitacora-detail-modal {
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .bitacora-modal-header {
+    padding: 19px;
+  }
+
+  .bitacora-modal-body {
+    gap: 19px;
+    padding: 19px;
+  }
+
+  .bitacora-modal-footer {
+    padding: 13px 19px;
+  }
+
+  .bitacora-modal-footer button {
+    width: 100%;
+  }
+
+  .bitacora-detail-status {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bitacora-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* =========================================================
+   BITÁCORA - PAGINACIÓN
+========================================================= */
+
+.bitacora-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.bitacora-pagination-info {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.bitacora-pagination-info strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.bitacora-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bitacora-page-button,
+.bitacora-page-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.bitacora-page-button:hover:not(:disabled),
+.bitacora-page-number:hover:not(.active):not(:disabled) {
+  color: var(--blue);
+  background: rgba(13, 38, 164, 0.05);
+  border-color: var(--blue);
+}
+
+.bitacora-page-number.active {
+  color: #fff;
+  background: #0D26A4;
+  border-color: #0D26A4;
+  font-weight: 700;
+}
+
+.bitacora-page-button:disabled,
+.bitacora-page-number:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.bitacora-page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .bitacora-pagination {
+    align-items: center;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .bitacora-pagination-info {
+    text-align: center;
+  }
+
+  .bitacora-pagination-controls {
+    width: 100%;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .bitacora-page-button,
+  .bitacora-page-number {
+    width: 33px;
+    height: 33px;
+  }
+}

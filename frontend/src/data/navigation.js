@@ -8,9 +8,9 @@ export const NAV_ITEMS = [
       "director",
       "supervisor",
       "mayordomo",
+      "administrador",
     ],
   },
-
   {
     id: "alerts",
     label: "Alertas",
@@ -22,7 +22,6 @@ export const NAV_ITEMS = [
       "mayordomo",
     ],
   },
-
   {
     id: "chat",
     label: "Chatbot IA",
@@ -34,7 +33,6 @@ export const NAV_ITEMS = [
       "mayordomo",
     ],
   },
-
   {
     id: "dashboards",
     label: "Dashboards",
@@ -45,7 +43,6 @@ export const NAV_ITEMS = [
       "supervisor",
     ],
   },
-
   {
     id: "plans",
     label: "Registro de labores",
@@ -56,13 +53,24 @@ export const NAV_ITEMS = [
       "mayordomo",
     ],
   },
-
   {
-    id: "admin",
+    id: "admin-gerente",
     label: "Administración",
     icon: "Settings",
-    roles: [
-      "gerente",
-    ],
+    roles: ["gerente"],
+  },
+  {
+    id: "admin",
+    label: "Gestión de usuarios",
+    icon: "Users",
+    section: "Control de usuarios",
+    roles: ["administrador"],
+  },
+  {
+    id: "bitacora",
+    label: "Bitácora de auditoría",
+    icon: "ClipboardList",
+    section: "Control de usuarios",
+    roles: ["administrador"],
   },
 ];

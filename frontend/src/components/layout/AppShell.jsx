@@ -9,6 +9,8 @@ import Alerts from "../../pages/Alerts";
 import Chatbot from "../../pages/Chatbot";
 import Dashboards from "../../pages/Dashboards";
 import RegistroPlanes from "../../pages/RegistroPlanes";
+import Administracion from "../../pages/Administracion";
+import Bitacora from "../../pages/administracion/Bitacora";
 import Placeholder from "../../pages/Placeholder";
 
 import { useApp } from "../../context/AppContext";
@@ -16,8 +18,7 @@ import { useApp } from "../../context/AppContext";
 export default function AppShell() {
   const { role, logout } = useApp();
 
-  const [activePage, setActivePage] =
-    useState("home");
+  const [activePage, setActivePage] = useState("home");
 
   const handleNavigate = (page) => {
     setActivePage(page);
@@ -25,13 +26,8 @@ export default function AppShell() {
 
   const renderPage = () => {
     switch (activePage) {
-
       case "home":
-        return (
-          <Home
-            onNavigate={handleNavigate}
-          />
-        );
+        return <Home onNavigate={handleNavigate} />;
 
       case "alerts":
         return <Alerts />;
@@ -40,8 +36,7 @@ export default function AppShell() {
         return <Chatbot />;
 
       case "dashboards":
-
-        if (!role.permissions.dashboards) {
+        if (!role?.permissions?.dashboards) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -53,8 +48,7 @@ export default function AppShell() {
         return <Dashboards />;
 
       case "plans":
-
-        if (!role.permissions.plans) {
+        if (!role?.permissions?.plans) {
           return (
             <Placeholder
               title="Acceso restringido"
@@ -66,64 +60,58 @@ export default function AppShell() {
         return <RegistroPlanes />;
 
       case "admin":
-
-        if (!role.permissions.admin) {
+        if (!role?.permissions?.admin) {
           return (
             <Placeholder
               title="Acceso restringido"
-              description="No tienes permisos para acceder a la administración."
+              description="No tienes permisos para gestionar usuarios."
+            />
+          );
+        }
+
+        return <Administracion />;
+
+      case "bitacora":
+        if (!role?.permissions?.admin) {
+          return (
+            <Placeholder
+              title="Acceso restringido"
+              description="No tienes permisos para consultar la bitácora de auditoría."
             />
           );
         }
 
         return (
-          <Placeholder
-            title="Administración"
-            description="Aquí se encontrarán las funciones administrativas de AgroXpert."
+          <Bitacora
+            onBack={() => handleNavigate("admin")}
           />
         );
 
       default:
-        return (
-          <Home
-            onNavigate={handleNavigate}
-          />
-        );
+        return <Home onNavigate={handleNavigate} />;
     }
   };
 
   return (
     <div className="app-shell">
-
-      {/* SIDEBAR */}
-
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}
         onLogout={logout}
       />
 
-      {/* CONTENIDO PRINCIPAL */}
-
       <div className="app-main">
-
-        <Topbar
-          onNavigate={handleNavigate}
-        />
+        <Topbar onNavigate={handleNavigate} />
 
         <main className="app-content">
           {renderPage()}
         </main>
-
       </div>
-
-      {/* NAVEGACIÓN MÓVIL */}
 
       <MobileBottomNav
         activePage={activePage}
         onNavigate={handleNavigate}
       />
-
     </div>
   );
 }
