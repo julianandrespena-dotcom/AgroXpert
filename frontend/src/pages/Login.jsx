@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Eye,
   EyeOff,
@@ -7,14 +7,15 @@ import {
   AlertCircle,
   ShieldCheck,
 } from "lucide-react";
+import { InteractionStatus } from "@azure/msal-browser";
 import { useMsal } from "@azure/msal-react";
 
 import { useApp } from "../context/AppContext";
 import { loginRequest } from "../auth/msalConfig";
 
 export default function Login() {
-  const { login } = useApp();
-  const { instance } = useMsal();
+  const { login, loginWithMicrosoft } = useApp();
+  const { instance, accounts, inProgress } = useMsal();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +24,80 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [corporateLoading, setCorporateLoading] = useState(false);
+
+  const processedAccountRef = useRef(null);
+
+  // Procesa la cuenta de Microsoft después de regresar de Entra ID.
+  useEffect(() => {
+    if (
+      inProgress !== InteractionStatus.None ||
+      accounts.length === 0
+    ) {
+      return;
+    }
+
+    const account =
+      instance.getActiveAccount() || accounts[0];
+
+    if (!account) {
+      return;
+    }
+
+    const accountId = account.homeAccountId;
+
+    if (processedAccountRef.current === accountId) {
+      return;
+    }
+
+    processedAccountRef.current = accountId;
+
+    const completeMicrosoftLogin = async () => {
+      setError("");
+      setCorporateLoading(true);
+
+      try {
+        instance.setActiveAccount(account);
+
+        const tokenResult = await instance.acquireTokenSilent({
+          ...loginRequest,
+          account,
+        });
+
+        if (!tokenResult.idToken) {
+          throw new Error("MICROSOFT_ID_TOKEN_NO_DISPONIBLE");
+        }
+
+        const result = await loginWithMicrosoft(
+          tokenResult.idToken
+        );
+
+        if (!result.success) {
+          setError(
+            result.message ||
+              "No fue posible completar el inicio de sesión corporativo."
+          );
+        }
+      } catch (err) {
+        console.error(
+          "Error completando el inicio de sesión corporativo:",
+          err
+        );
+
+        setError(
+          "No fue posible completar el inicio de sesión con Microsoft. Inténtalo nuevamente."
+        );
+      } finally {
+        setCorporateLoading(false);
+      }
+    };
+
+    completeMicrosoftLogin();
+  }, [
+    accounts,
+    inProgress,
+    instance,
+    loginWithMicrosoft,
+  ]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,6 +121,7 @@ export default function Login() {
   const handleCorporateLogin = async () => {
     setError("");
     setCorporateLoading(true);
+    processedAccountRef.current = null;
 
     try {
       await instance.loginRedirect(loginRequest);

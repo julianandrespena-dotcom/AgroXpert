@@ -14,7 +14,7 @@ vi.mock("../components/layout/Sidebar", () => ({
       <button onClick={() => onNavigate("home")}>Inicio</button>
       <button onClick={() => onNavigate("dashboards")}>Dashboards</button>
       <button onClick={() => onNavigate("plans")}>Planes</button>
-      <button onClick={() => onNavigate("admin")}>Administraci├│n</button>
+      <button onClick={() => onNavigate("admin")}>Administración</button>
       <button onClick={onLogout}>Cerrar sesi├│n</button>
     </nav>
   ),
@@ -49,7 +49,7 @@ vi.mock("../pages/RegistroPlanes", () => ({
 }));
 
 vi.mock("../pages/Administracion", () => ({
-  default: () => <h1>Administraci├│n de usuarios</h1>,
+  default: () => <h1>Administración de usuarios</h1>,
 }));
 
 vi.mock("../pages/Placeholder", () => ({
@@ -66,7 +66,7 @@ describe("AGX-31-HU-04 - Pantalla de inicio seg├║n rol", () => {
     vi.clearAllMocks();
   });
 
-  it("AGX-31-HU-04-CP-01: el administrador inicia en administraci├│n", () => {
+  it("AGX-31-HU-04-CP-01: el administrador inicia en administración", () => {
     useApp.mockReturnValue({
       role: {
         id: "administrador",
@@ -83,12 +83,12 @@ describe("AGX-31-HU-04 - Pantalla de inicio seg├║n rol", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: "Administraci├│n de usuarios",
+        name: "Administración de usuarios",
       })
     ).toBeTruthy();
   });
 
-  it("AGX-31-HU-04-CP-02: el gerente accede a dashboards y tiene restringidos planes y administraci├│n", () => {
+  it("AGX-31-HU-04-CP-02: el gerente accede a dashboards y tiene restringidos planes y administración", () => {
     useApp.mockReturnValue({
       role: {
         id: "gerente",
@@ -124,17 +124,17 @@ describe("AGX-31-HU-04 - Pantalla de inicio seg├║n rol", () => {
     ).toBeTruthy();
 
     fireEvent.click(
-      screen.getByRole("button", { name: "Administraci├│n" })
+      screen.getByRole("button", { name: "Administración" })
     );
 
     expect(
       screen.getByText(
-        "No tienes permisos para acceder a la administraci├│n."
+        "No tienes permisos para gestionar usuarios."
       )
     ).toBeTruthy();
   });
 
-  it("AGX-31-HU-04-CP-03: el mayordomo puede consultar planes, pero no dashboards ni administraci├│n", () => {
+  it("AGX-31-HU-04-CP-03: el mayordomo puede consultar planes, pero no dashboards ni administración", () => {
     useApp.mockReturnValue({
       role: {
         id: "mayordomo",
@@ -172,7 +172,7 @@ describe("AGX-31-HU-04 - Pantalla de inicio seg├║n rol", () => {
     ).toBeTruthy();
 
     fireEvent.click(
-      screen.getByRole("button", { name: "Administraci├│n" })
+      screen.getByRole("button", { name: "Administración" })
     );
 
     expect(

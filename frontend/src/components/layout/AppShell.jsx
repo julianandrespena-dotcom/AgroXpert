@@ -8,9 +8,11 @@ import MobileBottomNav from "./MobileBottomNav";
 import Home from "../../pages/Home";
 import Alerts from "../../pages/Alerts";
 import Chatbot from "../../pages/Chatbot";
-import Dashboard1 from "../../pages/dashboard_1"
+import Dashboard1 from "../../pages/dashboard_1";
 import RegistroPlanes from "../../pages/RegistroPlanes";
 import Administracion from "../../pages/Administracion";
+import Bitacora from "../../pages/administracion/Bitacora";
+
 import Placeholder from "../../pages/Placeholder";
 
 import { useApp } from "../../context/AppContext";
@@ -66,12 +68,28 @@ export default function AppShell() {
           return (
             <Placeholder
               title="Acceso restringido"
-              description="No tienes permisos para acceder a la administración."
+              description="No tienes permisos para gestionar usuarios."
             />
           );
         }
 
         return <Administracion />;
+
+      case "bitacora":
+        if (!role?.permissions?.admin) {
+          return (
+            <Placeholder
+              title="Acceso restringido"
+              description="No tienes permisos para consultar la bitácora de auditoría."
+            />
+          );
+        }
+
+        return (
+          <Bitacora
+            onBack={() => handleNavigate("admin")}
+          />
+        );
 
       default:
         return <Home onNavigate={handleNavigate} />;
@@ -89,7 +107,9 @@ export default function AppShell() {
       <div className="app-main">
         <Topbar onNavigate={handleNavigate} />
 
-        <main className="app-content">{renderPage()}</main>
+        <main className="app-content">
+          {renderPage()}
+        </main>
       </div>
 
       <MobileBottomNav

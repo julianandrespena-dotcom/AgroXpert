@@ -1,11 +1,10 @@
 ﻿
-import { describe, it, expect } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import request from "supertest";
 import app from "../src/server.js";
-import { afterEach } from "vitest";
 
 
-describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
+describe("AGX-28-HU-01: Inicio de sesión", () => {
   it("AGX-28-HU-01-CP-01: rechaza la solicitud si faltan las credenciales", async () => {
     const response = await request(app)
       .post("/api/auth/login")
@@ -16,12 +15,12 @@ describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
     expect(response.body.message).toBeTruthy();
   });
 
-  it("AGX-28-HU-01-CP-02: rechaza una contrase├▒a incorrecta", async () => {
+  it("AGX-28-HU-01-CP-02: rechaza una contraseña incorrecta", async () => {
     const response = await request(app)
       .post("/api/auth/login")
       .send({
         usuario: "test_supervisor_1",
-        password: "Contrase├▒aIncorrecta-123",
+        password: "ContraseñaIncorrecta-123",
       });
 
     expect(response.status).toBe(401);
@@ -31,7 +30,7 @@ describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
   });
 
   
-  it("AGX-28-HU-01-CP-03: permite iniciar sesi├│n con credenciales v├ílidas", async () => {
+  it("AGX-28-HU-01-CP-03: permite iniciar sesión con credenciales válidas", async () => {
     const response = await request(app)
       .post("/api/auth/login")
       .send({
@@ -53,7 +52,7 @@ describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
   });
 
   
-  it("AGX-28-HU-01-CP-04: consulta el usuario de una sesi├│n v├ílida", async () => {
+  it("AGX-28-HU-01-CP-04: consulta el usuario de una sesión válida", async () => {
     const loginResponse = await request(app)
       .post("/api/auth/login")
       .send({
@@ -83,14 +82,14 @@ describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
     expect(response.body.user.rol).toBe("supervisor");
   });
 
-  it("AGX-28-HU-01-CP-05: rechaza la consulta de sesi├│n sin autenticaci├│n", async () => {
+  it("AGX-28-HU-01-CP-05: rechaza la consulta de sesión sin autenticación", async () => {
     const response = await request(app).get("/api/auth/me");
 
     expect(response.status).toBe(401);
     expect(response.body.success).toBe(false);
   });
   
-  it("AGX-28-HU-01-CP-06: cierra la sesi├│n e impide reutilizarla", async () => {
+  it("AGX-28-HU-01-CP-06: cierra la sesión e impide reutilizarla", async () => {
     const agent = request.agent(app);
 
     const loginResponse = await agent
@@ -133,7 +132,7 @@ describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
     expect(response.headers["set-cookie"]).toBeUndefined();
   });
   
-  it("AGX-28-HU-01-CP-08: rechaza una cookie de sesi├│n inv├ílida", async () => {
+  it("AGX-28-HU-01-CP-08: rechaza una cookie de sesión inválida", async () => {
     const response = await request(app)
       .get("/api/auth/me")
       .set("Cookie", "agroxpert_session=token_invalido_12345");
@@ -143,13 +142,9 @@ describe("AGX-28-HU-01 ÔÇö Inicio de sesi├│n", () => {
     expect(response.body.authenticated).not.toBe(true);
   });
   
-afterEach(() => {
-  // Restaurar la variable de entorno despu├®s de cada prueba.
-  process.env.ENABLE_TEST_USERS = "true";
-});
 
-describe("AGX-28-HU-01 ÔÇö Configuraci├│n de cuentas de prueba", () => {
-  it("AGX-28-HU-01-CP-09: rechaza las cuentas temporales si est├ín deshabilitadas", async () => {
+describe("AGX-28-HU-01: Configuración de cuentas de prueba", () => {
+  it("AGX-28-HU-01-CP-09: rechaza las cuentas temporales si están deshabilitadas", async () => {
     const valorAnterior = process.env.ENABLE_TEST_USERS;
     process.env.ENABLE_TEST_USERS = "false";
 
@@ -174,7 +169,7 @@ describe("AGX-28-HU-01 ÔÇö Configuraci├│n de cuentas de prueba", () => {
   });
 });
 
-  it("AGX-28-HU-01-CP-10: normaliza espacios y may├║sculas del usuario", async () => {
+  it("AGX-28-HU-01-CP-10: normaliza espacios y mayúsculas del usuario", async () => {
     const response = await request(app)
       .post("/api/auth/login")
       .send({
