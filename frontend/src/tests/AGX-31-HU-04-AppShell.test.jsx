@@ -10,7 +10,7 @@ vi.mock("../context/AppContext", () => ({
 
 vi.mock("../components/layout/Sidebar", () => ({
   default: ({ onNavigate, onLogout }) => (
-    <nav aria-label="Navegaci├│n de prueba">
+    <nav aria-label="Navegación de prueba">
       <button onClick={() => onNavigate("home")}>Inicio</button>
       <button onClick={() => onNavigate("dashboards")}>Dashboards</button>
       <button onClick={() => onNavigate("plans")}>Planes</button>
@@ -61,7 +61,7 @@ vi.mock("../pages/Placeholder", () => ({
   ),
 }));
 
-describe("AGX-31-HU-04 - Pantalla de inicio seg├║n rol", () => {
+describe("AGX-31-HU-04 - Pantalla de inicio según el rol", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
