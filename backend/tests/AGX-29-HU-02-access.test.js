@@ -8,7 +8,7 @@ vi.mock("../src/database/fabric.js", () => ({
 import app from "../src/server.js";
 import { getFabricPool } from "../src/database/fabric.js";
 
-describe("AGX-29-HU-02 ÔÇö Zonas y haciendas visibles por usuario", () => {
+describe("AGX-29-HU-02 - Zonas y haciendas visibles por usuario", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
